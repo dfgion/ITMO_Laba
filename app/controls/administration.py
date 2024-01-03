@@ -149,17 +149,11 @@ class Theme(ft.UserControl):
             self.page.theme_mode = ft.ThemeMode.LIGHT
 
         if self.page.theme_mode == ft.ThemeMode.DARK:
-            self.page.controls[0].controls[0].content.controls[0].controls[
-                0
-            ].src = r"app\assets\images\black_background.gif"
+            self.page.controls[0].controls[0].content.controls[0].controls[0].src = r"app\assets\images\black_background.gif"
         else:
-            self.page.controls[0].controls[0].content.controls[0].controls[
-                0
-            ].src = r"app\assets\images\white_background.gif"
+            self.page.controls[0].controls[0].content.controls[0].controls[0].src = r"app\assets\images\white_background.gif"
 
-        await self.page.controls[0].controls[0].content.controls[0].controls[
-            0
-        ].update_async()
+        await self.page.controls[0].controls[0].content.controls[0].controls[0].update_async()
 
         e.control.text = (
             "| Light" if self.page.theme_mode == ft.ThemeMode.DARK else "| Dark"
@@ -193,9 +187,7 @@ class Theme(ft.UserControl):
             e.control.icon_color = (
                 "white" if self.page.theme_mode == ft.ThemeMode.DARK else "black"
             )
-        await self.page.controls[0].controls[0].content.controls[1].controls[
-            0
-        ].controls[0].content.controls[1].controls[0].content.update_async()
+        await self.page.controls[0].controls[0].content.controls[1].controls[0].controls[0].content.controls[1].controls[0].content.update_async()
 
         await self.page.update_async()
 
