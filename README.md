@@ -176,6 +176,9 @@ __и другие__
 [ООП](https://python-scripts.com/object-oriented-programming-in-python)\
 [Flet](https://flet.dev/)\
 [Classmethod](https://docs-python.ru/tutorial/vstroennye-funktsii-interpretatora-python/dekorator-classmethod/)\
+[Асинхронное программирование](https://proglib.io/p/python-asyncio)\
+[Asyncio](https://habr.com/ru/companies/wunderfund/articles/700474/)\
+[Eventloop](https://digitology.tech/docs/python_3/library/asyncio-eventloop.html)
 
 
 
