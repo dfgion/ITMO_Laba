@@ -173,9 +173,9 @@ __и другие__
 
 ## Полезные материалы
 
-[ООП](https://python-scripts.com/object-oriented-programming-in-python)
-[Flet](https://flet.dev/)
-[Classmethod](https://docs-python.ru/tutorial/vstroennye-funktsii-interpretatora-python/dekorator-classmethod/)
+[ООП](https://python-scripts.com/object-oriented-programming-in-python)\
+[Flet](https://flet.dev/)\
+[Classmethod](https://docs-python.ru/tutorial/vstroennye-funktsii-interpretatora-python/dekorator-classmethod/)\
 
 
 
