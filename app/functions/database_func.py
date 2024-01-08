@@ -52,10 +52,7 @@ async def get_entries_async(path: str, disable_rewrite: bool = True) -> str:
 async def delete_user_async(user_id: str, path: str = r'app\utils\correct_users.csv') -> None:
     async with aiofiles.open(path, 'w', newline='', encoding='utf-8') as af:
         writer = AsyncWriter(af)
-        await writer.writerows([
-                                ["Имя", "Последняя активность", "Город", "Права доступа", "ID", "Паспорт", "ИНН"], 
-                                ["Даня", "2020-11-11", "Санкт-Петербург", "Администратор", "101", "4001 123456", "1234567890"],
-                                ]
+        await writer.writerows([]
                                )
         
 def flutter_formatting(name, last_login, city, status, user_id, passport, tin) -> ft.Row:
