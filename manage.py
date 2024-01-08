@@ -9,7 +9,7 @@ from app.app_run import run_app
 
 
 async def main():
-    task_app = asyncio.create_task(ft.app_async(target=run_app, assets_dir=r"C:\Users\Даниил\Desktop\programming\app\assets"))
+    task_app = asyncio.create_task(ft.app_async(target=run_app, assets_dir=r"app\assets"))
     task_telegram = asyncio.create_task(run_bot())
     await task_app
     await task_telegram

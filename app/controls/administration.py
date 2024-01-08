@@ -57,22 +57,10 @@ class Points(ft.UserControl):
             .controls[1]
             .controls[0]
         )
-        bans = (
-            self.page.controls[0]
-            .controls[0]
-            .content.controls[1]
-            .controls[1]
-            .controls[2]
-            .controls[0]
-        )
         if e.control.text == "| HOME":
             # move database up animation
             database.offset = ft.transform.Offset(0, -2)
             await database.update_async()
-
-            # move bans up animation
-            bans.offset = ft.transform.Offset(0, -2)
-            await bans.update_async()
 
             # show home animation
             home.offset = ft.transform.Offset(0, 0)
@@ -83,26 +71,9 @@ class Points(ft.UserControl):
             home.offset = ft.transform.Offset(0, -2)
             await home.update_async()
 
-            # move bans up animation
-            bans.offset = ft.transform.Offset(0, -2)
-            await bans.update_async()
-
             # show database animation
             database.offset = ft.transform.Offset(0, 0)
             await database.update_async()
-
-        elif e.control.text == "| BANS":
-            # move database up animation
-            database.offset = ft.transform.Offset(0, -2)
-            await database.update_async()
-
-            # move bans up animation
-            home.offset = ft.transform.Offset(0, -2)
-            await home.update_async()
-
-            # show bans animation
-            bans.offset = ft.transform.Offset(0, 0)
-            await bans.update_async()
 
     def build(self) -> ft.Container:
         return ft.Container(
@@ -122,17 +93,6 @@ class Points(ft.UserControl):
                     ft.ElevatedButton(
                         icon=ft.icons.DATASET,
                         text="| DATABASE",
-                        width=200,
-                        height=100,
-                        color="white",
-                        style=ft.ButtonStyle(
-                            shape=ft.RoundedRectangleBorder(radius=15),
-                        ),
-                        on_click=self.animate,
-                    ),
-                    ft.ElevatedButton(
-                        icon=ft.icons.SCREEN_LOCK_LANDSCAPE,
-                        text="| BANS",
                         width=200,
                         height=100,
                         color="white",

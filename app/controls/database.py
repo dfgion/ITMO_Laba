@@ -33,11 +33,11 @@ class Entries(ft.UserControl):
         self.entries = [i for i in get_entries(r'app\utils\users.csv', disable_rewrite=False)]
         
     async def sort_by_id(self, e: ft.DataColumnSortEvent) -> None:
-        self.controls[0].content.rows.sort(
+        self.controls[0].controls[0].controls[0].rows.sort(
             key=lambda x: x.cells[e.column_index].content.value,
-            reverse=self.controls[0].content.sort_ascending,
+            reverse=self.controls[0].controls[0].controls[0].sort_ascending,
         )
-        self.controls[0].content.sort_ascending = not self.controls[0].content.sort_ascending
+        self.controls[0].controls[0].controls[0].sort_ascending = not self.controls[0].controls[0].controls[0].sort_ascending
         await self.update_async()
         
     def build(self) -> ft.Row:
@@ -75,7 +75,8 @@ class Entries(ft.UserControl):
                                                                             weight='BOLD', 
                                                                             color='black'),
                                                                     numeric=True,
-                                                                    on_sort=self.sort_by_id
+                                                                    on_sort=self.sort_by_id,
+                                                                    tooltip='Sort by id'
                                                                     ),
                                                     ft.DataColumn(ft.Text(value='Паспорт', 
                                                                             font_family=r"app\assets\fonts\kbastrolyte.ttf", 
@@ -127,15 +128,13 @@ class Delete(ft.UserControl):
         print(type(e.control.value))
         datatable: ft.DataTable = self.page.controls[0].controls[0].content.controls[1].controls[1].controls[1].controls[0].content.controls[1].controls[0].content.controls[0].controls[0].controls[0]
         if e.control.value == "":
-            print('TYPE ID')
             e.control.error_text = 'type ID'
         else:
             try:
                 int(e.control.value)
-                #await delete_user_async(path=r'app\utils\correct_users.csv', user_id = e.control.value)
+                await delete_user_async(path=r'app\utils\correct_users.csv', user_id = e.control.value)
                 datatable.rows = [i async for i in get_entries_async(path=r'app\utils\correct_users.csv')]
             except:
-                print('TYPE NUMBER')
                 e.control.error_text = 'type number'
         await e.control.update_async()
         await datatable.update_async()
