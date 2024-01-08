@@ -2,29 +2,44 @@ import sys
 
 import flet as ft
 
-sys.path.append(r"C:\Users\Даниил\Desktop\laba_for_programming")
+sys.path.append(r"C:\Users\Даниил\Desktop\programming")
 from app.controls.bans import BansPage
 from app.controls.database import DatabasePage
-from app.controls.home import HomeOption
+from app.controls.home import HomePage
+
+from bot.config.cfg import bot
 
 
 class ITMOLogo(ft.UserControl):
-    async def animate(self, e):
-        e.control.border = ft.Border()
+    def __init__(self, page) -> None:
+        super().__init__()
+        self.page = page
+        
+    async def animate(self, e) -> None:
+        e.control.content.scale = 1.3 if e.control.content.scale == 1 else 1
+        await self.update_async()
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
-            content=ft.Image(src=r"app\assets\images\label.png", width=200, height=200),
+            content=ft.Image(src=r"app\assets\images\label.png", 
+                             width=200, 
+                             height=200, 
+                             scale=1, 
+                             animate_scale=ft.animation.Animation(duration=1000, curve=ft.AnimationCurve.EASE_IN)
+                             ),
             on_hover=self.animate,
-        )
+            border_radius=20,
+            width=200,
+            height=200
+            )
 
 
 class Points(ft.UserControl):
-    def __init__(self, page):
+    def __init__(self, page) -> None:
         super().__init__()
         self.page = page
 
-    async def animate(self, e):
+    async def animate(self, e) -> None:
         # JSON MAGIC IN FLET??!111!
         home = (
             self.page.controls[0]
@@ -89,7 +104,7 @@ class Points(ft.UserControl):
             bans.offset = ft.transform.Offset(0, 0)
             await bans.update_async()
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.Column(
                 controls=[
@@ -138,11 +153,11 @@ class Points(ft.UserControl):
 
 
 class Theme(ft.UserControl):
-    def __init__(self, page):
+    def __init__(self, page) -> None:
         super().__init__()
         self.page = page
 
-    async def switch_theme(self, e):
+    async def switch_theme(self, e) -> None:
         if self.page.theme_mode == ft.ThemeMode.LIGHT:
             self.page.theme_mode = ft.ThemeMode.DARK
         else:
@@ -188,10 +203,19 @@ class Theme(ft.UserControl):
                 "white" if self.page.theme_mode == ft.ThemeMode.DARK else "black"
             )
         await self.page.controls[0].controls[0].content.controls[1].controls[0].controls[0].content.controls[1].controls[0].content.update_async()
-
+        home_image = self.page.controls[0].controls[0].content.controls[1].controls[1].controls[0].controls[0].content.controls[0].controls[0]
+        home_block = self.page.controls[0].controls[0].content.controls[1].controls[1].controls[0].controls[0].content.controls[1].controls[0]
+        home_image.bgcolor = ft.colors.GREY_400 if self.page.theme_mode == ft.ThemeMode.LIGHT else 'black'
+        home_block.border.top.color = ft.colors.GREY_400 if self.page.theme_mode == ft.ThemeMode.LIGHT else 'black'
+        home_block.border.bottom.color = ft.colors.GREY_400 if self.page.theme_mode == ft.ThemeMode.LIGHT else 'black'
+        home_block.border.left.color = ft.colors.GREY_400 if self.page.theme_mode == ft.ThemeMode.LIGHT else 'black'
+        home_block.border.right.color = ft.colors.GREY_400 if self.page.theme_mode == ft.ThemeMode.LIGHT else 'black'
+        await home_image.update_async()
+        await home_block.update_async()
+        
         await self.page.update_async()
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.ElevatedButton(
                 icon=ft.icons.SUNNY,
@@ -213,16 +237,20 @@ class Theme(ft.UserControl):
 
 
 class Navigation(ft.UserControl):
-    def __init__(self, page):
+    def __init__(self, page) -> None:
         super().__init__()
         self.page = page
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.Column(
-                controls=[ITMOLogo(), Points(page=self.page), Theme(page=self.page)],
+                controls=[
+                    ITMOLogo(page=self.page), 
+                    Points(page=self.page), 
+                    Theme(page=self.page)
+                    ],
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-            ),
+                ),
             width=200,
             height=750,
             opacity=0.8,
@@ -231,7 +259,7 @@ class Navigation(ft.UserControl):
 
 
 class BackgroundImage(ft.UserControl):
-    def build(self):
+    def build(self) -> ft.Image:
         return ft.Image(
             src=r"app\assets\images\black_background.gif",
             width=1000,
@@ -241,31 +269,32 @@ class BackgroundImage(ft.UserControl):
 
 
 class MainPage(ft.UserControl):
-    def __init__(self, page):
+    def __init__(self, page, nickname) -> None:
         super().__init__()
         self.page = page
-        self.home = HomeOption(page=self.page)
+        self.home = HomePage(page=self.page, nickname = nickname)
         self.database = DatabasePage(page=self.page)
         self.bans = BansPage(page=self.page)
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.Stack(
-                controls=[
-                    BackgroundImage(),
-                    ft.Row(
                         controls=[
-                            Navigation(page=self.page),
-                            ft.Stack(
-                                controls=[self.home, self.database, self.bans],
-                                width=800,
-                                height=750,
-                            ),
-                        ],
-                        alignment=ft.MainAxisAlignment.START,
-                    ),
-                ]
-            ),
+                            BackgroundImage(),
+                            ft.Row(
+                                controls=[
+                                    Navigation(page=self.page),
+                                    ft.Stack(
+                                        controls=[self.home, self.database, self.bans],
+                                        width=800,
+                                        height=750,
+                                        ),
+                                    ],
+                                alignment=ft.MainAxisAlignment.START,
+                                ),
+                            ]
+                        ),
+            disabled=False,
             width=1000,
             height=750,
             bgcolor="transparent",
@@ -274,7 +303,7 @@ class MainPage(ft.UserControl):
         )
 
 
-async def gui(page: ft.Page):
+async def gui(page: ft.Page) -> None:
     page.padding = 0
     page.title = "ITMO Administrator"
     page.window_maximizable = False
@@ -285,7 +314,7 @@ async def gui(page: ft.Page):
     page.window_width = 1100
     page.window_height = 900
     page.window_resizable = False
-    await page.add_async(MainPage(page=page))
+    await page.add_async(MainPage(page=page, nickname='Даниил'))
 
 
 if __name__ == "__main__":

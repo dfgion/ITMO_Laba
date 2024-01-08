@@ -5,15 +5,12 @@ import flet as ft
 from app.controls.administration import MainPage
 from app.utils.cipher import cipher
 
-ft.animation.AnimationCurve
-
-
 class SignInText(ft.UserControl):
     async def animate(self, e):
         e.control.width = 260 if e.control.width == 100 else 100
         await self.update_async()
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.Text(
                 value="Sign in",
@@ -38,7 +35,7 @@ class SignInText(ft.UserControl):
 class Code(ft.UserControl):
     code = ""
 
-    def __init__(self, page: ft.Page):
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
 
@@ -49,12 +46,14 @@ class Code(ft.UserControl):
         while True:
             data = await reader.read(128)
             msg = data.decode()
-            print(f"code: {cipher.decrypt(msg).decode('utf-8')}")
-            cls.code = cipher.decrypt(msg).decode("utf-8").upper()
+            information = cipher.decrypt(msg).decode('utf-8').split(' ')
+            print(f"code: {information[0]}, nickname: {information[1]}")
+            cls.code = information[0].upper()
+            cls.nickname = information[1]
             writer.write(data)
             await writer.drain()
 
-    async def animate(self, e):
+    async def animate(self, e) -> None:
         e.control.content.hint_text = (
             "Type code from bot" if e.control.width == 180 else None
         )
@@ -66,28 +65,28 @@ class Code(ft.UserControl):
         )
         await self.update_async()
 
-    async def submit(self, e):
+    async def submit(self, e) -> None:
         if self.code == "":
-            e.control.error_text = "Use the bot to get code"
+            e.control.error_text = "Use the bot to get the code"
         elif self.code == e.control.value:
             await self.page.clean_async()
             self.page.window_width = 1100
-            await self.page.add_async(MainPage(page=self.page))
+            await self.page.add_async(MainPage(page=self.page, nickname=self.nickname))
             await self.page.update_async()
         else:
             e.control.error_text = "incorrect code"
         await self.update_async()
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.TextField(
                 label="Code",
                 label_style=ft.TextStyle(
-                    font_family=r"app\assets\fonts\ocra.ttf",
-                    weight="BOLD",
-                    color="white",
-                    size=20,
-                ),
+                                        font_family=r"app\assets\fonts\ocra.ttf",
+                                        weight="BOLD",
+                                        color="white",
+                                        size=20,
+                                        ),
                 capitalization=ft.TextCapitalization.CHARACTERS,
                 password=True,
                 max_length=16,
@@ -117,7 +116,7 @@ class Code(ft.UserControl):
 
 
 class Hint(ft.UserControl):
-    async def animate(self, e):
+    async def animate(self, e) -> None:
         e.control.disabled = True
         await self.update_async()
         text = ""
@@ -129,7 +128,7 @@ class Hint(ft.UserControl):
         e.control.disabled = False
         await self.update_async()
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.TextField(
                 label="",
@@ -162,11 +161,11 @@ class Hint(ft.UserControl):
 
 
 class SignIn(ft.UserControl):
-    def __init__(self, page: ft.Page):
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.Column(controls=[SignInText(), Code(page=self.page), Hint()]),
             width=300,
@@ -176,7 +175,7 @@ class SignIn(ft.UserControl):
 
 
 class QR(ft.UserControl):
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.Image(
                 src=r"app\assets\images\white_qr.png",
@@ -193,11 +192,11 @@ class QR(ft.UserControl):
 
 
 class BlackPanel(ft.UserControl):
-    def __init__(self, page: ft.Page):
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.Column(
                 controls=[SignIn(page=self.page), QR()],
@@ -219,7 +218,7 @@ class BlackPanel(ft.UserControl):
 
 
 class ITMOImage(ft.UserControl):
-    def build(self):
+    def build(self) -> ft.Image:
         return ft.Image(
             src=r"app\assets\images\label.png",
             width=300,
@@ -228,7 +227,7 @@ class ITMOImage(ft.UserControl):
 
 
 class BackgroundImage(ft.UserControl):
-    def build(self):
+    def build(self) -> ft.Image:
         return ft.Image(
             src=r"app\assets\images\background_image.gif",
             width=700,
@@ -238,11 +237,11 @@ class BackgroundImage(ft.UserControl):
 
 
 class SingInPage(ft.UserControl):
-    def __init__(self, page: ft.Page):
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
 
-    def build(self):
+    def build(self) -> ft.Container:
         return ft.Container(
             content=ft.Stack(
                 controls=[
