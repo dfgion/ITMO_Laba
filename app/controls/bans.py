@@ -2,7 +2,7 @@ import flet as ft
 
 
 class BansPage(ft.UserControl):
-    def __init__(self, page) -> None:
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
 

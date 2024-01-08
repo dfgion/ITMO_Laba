@@ -1,21 +1,17 @@
-import sys
-
 import flet as ft
+import flet_core as ftc
 
-sys.path.append(r"C:\Users\Даниил\Desktop\programming")
 from app.controls.bans import BansPage
 from app.controls.database import DatabasePage
 from app.controls.home import HomePage
 
-from bot.config.cfg import bot
-
 
 class ITMOLogo(ft.UserControl):
-    def __init__(self, page) -> None:
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
         
-    async def animate(self, e) -> None:
+    async def animate(self, e: ftc.ControlEvent) -> None:
         e.control.content.scale = 1.3 if e.control.content.scale == 1 else 1
         await self.update_async()
 
@@ -35,11 +31,11 @@ class ITMOLogo(ft.UserControl):
 
 
 class Points(ft.UserControl):
-    def __init__(self, page) -> None:
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
 
-    async def animate(self, e) -> None:
+    async def animate(self, e: ftc.ControlEvent) -> None:
         # JSON MAGIC IN FLET??!111!
         home = (
             self.page.controls[0]
@@ -113,7 +109,7 @@ class Points(ft.UserControl):
 
 
 class Theme(ft.UserControl):
-    def __init__(self, page) -> None:
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
 
@@ -197,7 +193,7 @@ class Theme(ft.UserControl):
 
 
 class Navigation(ft.UserControl):
-    def __init__(self, page) -> None:
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
 
@@ -229,7 +225,7 @@ class BackgroundImage(ft.UserControl):
 
 
 class MainPage(ft.UserControl):
-    def __init__(self, page, nickname) -> None:
+    def __init__(self, page: ft.Page, nickname: str) -> None:
         super().__init__()
         self.page = page
         self.home = HomePage(page=self.page, nickname = nickname)
@@ -278,4 +274,5 @@ async def gui(page: ft.Page) -> None:
 
 
 if __name__ == "__main__":
+    # Для запуска без запроса кода
     ft.app(target=gui, assets_dir=r"app\assets")

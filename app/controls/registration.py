@@ -1,12 +1,13 @@
 import asyncio
 
 import flet as ft
+import flet_core as ftc
 
 from app.controls.administration import MainPage
 from app.utils.cipher import cipher
 
 class SignInText(ft.UserControl):
-    async def animate(self, e):
+    async def animate(self, e: ftc.ControlEvent):
         e.control.width = 260 if e.control.width == 100 else 100
         await self.update_async()
 
@@ -53,7 +54,7 @@ class Code(ft.UserControl):
             writer.write(data)
             await writer.drain()
 
-    async def animate(self, e) -> None:
+    async def animate(self, e: ftc.ControlEvent) -> None:
         e.control.content.hint_text = (
             "Type code from bot" if e.control.width == 180 else None
         )
@@ -65,7 +66,7 @@ class Code(ft.UserControl):
         )
         await self.update_async()
 
-    async def submit(self, e) -> None:
+    async def submit(self, e: ftc.ControlEvent) -> None:
         if self.code == "":
             e.control.error_text = "Use the bot to get the code"
         elif self.code == e.control.value:
@@ -116,7 +117,7 @@ class Code(ft.UserControl):
 
 
 class Hint(ft.UserControl):
-    async def animate(self, e) -> None:
+    async def animate(self, e: ftc.ControlEvent) -> None:
         e.control.disabled = True
         await self.update_async()
         text = ""

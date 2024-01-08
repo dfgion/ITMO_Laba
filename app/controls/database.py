@@ -1,8 +1,6 @@
 import flet as ft
 import flet_core as ft_core
-import sys
 
-sys.path.append(r'C:\Users\Даниил\Desktop\programming')
 from app.functions.database_func import get_entries, get_entries_async, delete_user_async
 
 
@@ -120,7 +118,7 @@ class DatabaseEntriesBlock(ft.UserControl):
                     )
         
 class Delete(ft.UserControl):
-    def __init__(self, page) -> None:
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
         
@@ -182,7 +180,7 @@ class Delete(ft.UserControl):
         )
 
 class DatabasePage(ft.UserControl):
-    def __init__(self, page) -> None:
+    def __init__(self, page: ft.Page) -> None:
         super().__init__()
         self.page = page
         

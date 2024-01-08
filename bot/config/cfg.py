@@ -4,9 +4,9 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=r"C:\Users\Даниил\Desktop\programming\venv\.env")
+load_dotenv(dotenv_path=r"") # Укажите путь к файлу, где хранятся переменные окружения (Стандарт .env)
 
-bot = Bot(token=os.getenv('BOT_TOKEN'))
+bot = Bot(token=os.getenv('BOT_TOKEN')) # Укажите токен бота в переменных окружения
 dp = Dispatcher()
 
 

@@ -1,8 +1,5 @@
 import asyncio
 
-# import sys
-# sys.path.append(r'C:\Users\Даниил\Desktop\programming')
-
 from bot.config.cfg import bot, dp, set_commands
 from bot.core.handlers import basic
 

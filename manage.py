@@ -1,9 +1,7 @@
 import asyncio
-import datetime
 
 import flet as ft
 
-from app.controls.registration import SingInPage
 from bot.bot_run import run_bot
 from app.app_run import run_app
 

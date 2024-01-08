@@ -20,7 +20,7 @@ class ProfileImage(ft.UserControl):
         )
         
 class LeftPart(ft.UserControl):
-    def __init__(self, nickname) -> None:
+    def __init__(self, nickname: str) -> None:
         super().__init__()
         self.nickname = nickname
     def build(self) -> ft.Column:
@@ -107,7 +107,7 @@ class RightPart(ft.UserControl):
                          )
         
 class ProfileInfo(ft.UserControl):
-    def __init__(self, nickname) -> None:
+    def __init__(self, nickname: str) -> None:
         super().__init__()
         self.nickname = nickname
     def build(self) -> ft.Container:
@@ -148,7 +148,7 @@ class ProfileInfo(ft.UserControl):
                     )
 
 class HomePage(ft.UserControl):
-    def __init__(self, page, nickname) -> None:
+    def __init__(self, page: ft.Page, nickname: str) -> None:
         super().__init__()
         self.page = page
         self.nickname = nickname
